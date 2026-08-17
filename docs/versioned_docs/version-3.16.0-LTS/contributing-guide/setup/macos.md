@@ -3,7 +3,9 @@ id: macos
 title: Mac OS
 ---
 
+:::warning
 The following guide is intended for contributors to set-up ToolJet locally. If you're interested in **self-hosting** ToolJet, please refer to the **[Setup](/docs/setup/)** section.
+:::
 
 
 To set up and run ToolJet on macOS for development, begin by opening your terminal and executing the commands listed below. For a better understanding of ToolJet's framework, we advise reviewing our [architecture guide](/docs/contributing-guide/setup/architecture) before proceeding.
@@ -17,14 +19,14 @@ To set up and run ToolJet on macOS for development, begin by opening your termin
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     ```
 
-    1.2 Install Node.js ( version: v22.15.1 ) and npm (version: v10.9.2)
+    1.2 Install Node.js ( version: v18.18.2 ) and npm (version: v9.8.1)
     ```bash
     brew install nvm
     export NVM_DIR=~/.nvm
     source $(brew --prefix nvm)/nvm.sh
-    nvm install 22.15.1
-    nvm use 22.15.1
-    npm install -g npm@10.9.2
+    nvm install 18.18.2
+    nvm use 18.18.2
+    npm install -g npm@9.8.1
     ```
 
     1.3 Install Postgres
@@ -32,8 +34,12 @@ To set up and run ToolJet on macOS for development, begin by opening your termin
     ToolJet uses a postgres database as the persistent storage for storing data related to users and apps. We do not plan to support other databases such as MySQL.
     :::
 
+    :::info
+    ToolJet is built and tested against PostgreSQL 13, and newer PostgreSQL versions are not officially supported for local development. Since the `postgresql@13` Homebrew formula was disabled in March 2026, we recommend running PostgreSQL 13 using Docker. Make sure you have [Docker Desktop](https://docs.docker.com/desktop/) installed on your Mac.
+    :::
+
     ```bash
-    brew install postgresql@13
+    docker run --name tooljet-postgres -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:13
     ```
     
     1.4 Install PostgREST
